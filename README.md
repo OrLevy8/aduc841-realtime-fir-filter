@@ -5,6 +5,8 @@
 [![DSP: Fixed-Point FIR](https://img.shields.io/badge/DSP-Fixed--Point%2011--Tap-blue.svg)]()
 [![Verification: ESP32 DSO 10kSPS](https://img.shields.io/badge/Verification-ESP32%20DSO%2010kSPS-success.svg)]()
 
+**[English](README.md) • [עברית (Hebrew)](README.he.md)**
+
 A bare-metal embedded C implementation of a **Real-Time 11-Tap Finite Impulse Response (FIR) Low-Pass Filter** running on an **Analog Devices ADuC841** microcontroller (pipelined single-cycle 8051 core).
 
 The system continuously acquires analog input data via a hardware timer trigger ($F_s = 1000\text{ Hz}$), executes fixed-point convolution using an $O(1)$ circular buffer residing in fast internal RAM (`idata`), and drives dual on-chip 12-bit DACs to benchmark the raw input against the filtered output in real time on an oscilloscope.
@@ -110,7 +112,8 @@ The following captures demonstrate the three operational regimes of the filter:
 │   ├── images/              # Oscilloscope captures and Bode plot response curves
 │   ├── FIR_FILTER_VERIFICATION_REPORT.md # In-depth technical verification report
 │   └── sweep_measurements.json          # Experimental sweep dataset
-└── README.md
+├── README.md                # English Documentation
+└── README.he.md             # Hebrew Documentation (עברית)
 ```
 
 ---
