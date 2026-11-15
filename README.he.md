@@ -117,12 +117,14 @@ $$y[n] = \frac{1}{744} \sum_{m=0}^{10} h[m] \cdot x[n-m]$$
 │   ├── peripherals.c        # אתחול טיימר 2, SAR ADC, ממירי DAC ופסיקת ADC
 │   └── peripherals.h        # הגדרות רגיסטרי SFR, מבנה הנתונים והצהרות API
 ├── scripts/
-│   └── fir_design.py        # סקריפט Python לתכנון המסנן, קוונטיזציה והפקת גרפים
+│   ├── fir_design.py        # סקריפט Python לתכנון המסנן, קוונטיזציה והפקת גרפים
+│   └── requirements.txt     # תלויות פייתון (numpy, scipy, matplotlib)
 ├── docs/
 │   ├── images/              # צילומי מסך מאוסילוסקופ ועקומות תגובת תדר
 │   ├── FIR_FILTER_VERIFICATION_REPORT.md # דוח ניסוי הנדסי מורחב ומפורט
 │   └── sweep_measurements.json          # נתוני מדידה גולמיים של סריקת התדר
 ├── LICENSE                  # רישיון קוד פתוח MIT
+├── requirements.txt         # הגדרת תלויות פייתון בשורש המאגר
 ├── README.md                # תיעוד ראשי באנגלית (English Documentation)
 └── README.he.md             # תיעוד ראשי בעברית
 ```

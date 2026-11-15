@@ -117,12 +117,14 @@ The following captures demonstrate the three operational regimes of the filter:
 │   ├── peripherals.c        # Timer 2, SAR ADC, Dual-DAC init & ADC ISR
 │   └── peripherals.h        # SFR declarations, buffer struct & API prototypes
 ├── scripts/
-│   └── fir_design.py        # Python script for coefficient generation & Bode modeling
+│   ├── fir_design.py        # Python script for coefficient generation & Bode modeling
+│   └── requirements.txt     # Python dependencies (numpy, scipy, matplotlib)
 ├── docs/
 │   ├── images/              # Oscilloscope captures and Bode plot response curves
 │   ├── FIR_FILTER_VERIFICATION_REPORT.md # In-depth technical verification report
 │   └── sweep_measurements.json          # Experimental sweep dataset
 ├── LICENSE                  # MIT License
+├── requirements.txt         # Root Python dependencies definition
 ├── README.md                # English Documentation
 └── README.he.md             # Hebrew Documentation (עברית)
 ```
