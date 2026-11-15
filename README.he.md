@@ -8,13 +8,17 @@
 
 **[English](README.md) • [עברית](README.he.md)**
 
+**[דגשים הנדסיים](#-דגשים-הנדסיים-מרכזיים-embedded--dsp-highlights) • [ארכיטקטורה](#-ארכיטקטורת-המערכת) • [אימות מעבדתי](#-אימות-ניסיוני-וממצאי-מעבדה) • [מבנה המאגר](#-מבנה-התיקיות-במאגר) • [בנייה וצריבה](#-הוראות-בנייה-וצריבה-build--flash)**
+
 מימוש Bare-Metal בשפת C של **מסנן מעביר נמוכים ספרתי מסוג FIR (Finite Impulse Response) בזמן אמת**, בעל 11 מקדמים, הרץ ישירות על גבי מיקרו-בקר **Analog Devices ADuC841** (ליבת 8051 בעלת מחזור שעון יחיד לפקודה).
 
 המערכת דוגמת אות אנלוגי בכניסה באמצעות טריגר חומרה מטיימר ($F_s = 1000\text{ Hz}$), מבצעת קונבולוציה בחשבון נקודה קבועה (Fixed-Point) באמצעות חוצץ מעגלי ב-$O(1)$ בזיכרון הנתונים הפנימי המהיר (`idata`), ומשחזרת בו-זמנית שני אותות אנלוגיים דרך צמד ממירי DAC של 12 ביט להשוואה חיה באוסילוסקופ בין האות המקורי לאות המסונן.
 
 <div align="center">
-  <img src="docs/images/hardware_setup.jpg" alt="ערכת פיתוח ADuC841" width="620" />
-  <p><em>מערך החומרה: כרטיס הפיתוח Analog Devices ADuC841 MicroConverter SAR Evaluation Board (Rev A4) המריץ את קושחת ה-FIR בזמן אמת</em></p>
+  <a href="docs/images/hardware_setup.jpg">
+    <img src="docs/images/hardware_setup.jpg" alt="ערכת פיתוח ADuC841" width="620" />
+  </a>
+  <p><em>מערך החומרה: כרטיס הפיתוח Analog Devices ADuC841 MicroConverter SAR Evaluation Board (Rev A4) המריץ את קושחת ה-FIR בזמן אמת (לחצו להגדלה)</em></p>
 </div>
 
 ---
@@ -49,7 +53,7 @@ flowchart LR
     F --> G
 ```
 
-### המודל המתמטי
+### 📐 מודל מתמטי וחשבון נקודה קבועה (Fixed-Point DSP)
 
 המסנן מממש משוואת הפרשים של מסנן FIR סימטרי בעל מופע ליניארי (Linear Phase):
 
@@ -70,7 +74,7 @@ $$y[n] = \frac{1}{744} \sum_{m=0}^{10} h[m] \cdot x[n-m]$$
 
 | אימות חומרה אמפירי: מדידות אוסילוסקופ מול תיאוריה | מודל תכנון: אידיאלי (Float) מול קוונטיזציה (Fixed-Point) |
 | :---: | :---: |
-| ![אימות חומרה מול תיאוריה](docs/images/00_bode_linear_measured_vs_theory.png) | ![השוואת קוונטיזציה](docs/images/filter_bode_linear.png) |
+| [![אימות חומרה מול תיאוריה](docs/images/00_bode_linear_measured_vs_theory.png)](docs/images/00_bode_linear_measured_vs_theory.png) | [![השוואת קוונטיזציה](docs/images/filter_bode_linear.png)](docs/images/filter_bode_linear.png) |
 | **נקודות המדידה האמפיריות מהאוסילוסקופ (אדום)** תואמות במדויק את המודל התיאורטי. | **קוונטיזציית 8-ביט (פקטור 744)** שומרת על תדר קיטעון מדויק ($0.707$) ומופע ליניארי. |
 
 ---
@@ -81,8 +85,10 @@ $$y[n] = \frac{1}{744} \sum_{m=0}^{10} h[m] \cdot x[n-m]$$
 
 | פס מעבר (10 Hz) | אזור הקיטעון (70 Hz) | פס חסימה עמוק (200 Hz) |
 | :---: | :---: | :---: |
-| ![Passband 10Hz](docs/images/02_passband_10hz.png) | ![Cutoff 70Hz](docs/images/05_cutoff_fc_70hz.png) | ![Stopband 200Hz](docs/images/08_deep_stopband_200hz.png) |
+| [![Passband 10Hz](docs/images/02_passband_10hz.png)](docs/images/02_passband_10hz.png) | [![Cutoff 70Hz](docs/images/05_cutoff_fc_70hz.png)](docs/images/05_cutoff_fc_70hz.png) | [![Stopband 200Hz](docs/images/08_deep_stopband_200hz.png)](docs/images/08_deep_stopband_200hz.png) |
 | **הגבר: -0.3 dB** ($0.97\times$)<br>העברה מלאה של המשרעת<br>שיהוי ליניארי קבוע של $\tau \approx 5.0\text{ ms}$ | **הגבר: -2.8 dB** ($0.73\times$)<br>סמוך לנקודת חצי ההספק ($f_c \approx 64\text{ Hz}$)<br>היסט מופע של כ-$-90^\circ$ | **הגבר: -14.1 dB** ($0.20\times$)<br>הנחתה חזקה של רכיבי תדר גבוה<br>דיכוי הרעש עד לרצפת ה-DAC/ADC |
+
+> 💡 **טיפ:** לחצו על כל צילום מסך או גרף בטבלה כדי לצפות במדידות הסמנים והאות ברזולוציה המקורית המלאה.
 
 > **מקרא ערוצי אוסילוסקופ:**  
 > 🟡 **ערוץ 1 (צהוב):** אות כניסה גולמי דרך `DAC0`  
@@ -147,15 +153,24 @@ $$y[n] = \frac{1}{744} \sum_{m=0}^{10} h[m] \cdot x[n-m]$$
 
 ## 🚀 הוראות בנייה וצריבה (Build & Flash)
 
-1. **פתיחת הפרויקט ב-Keil µVision:**
-   * הפעילו את Keil µVision ופתחו ישירות את הקובץ `project.uvproj` משורש המאגר.
-   * הרכיב (`ADuC841`), עץ הקבצים (`.\src\*.c`), נתיבי ה-Includes, מודל הזיכרון Small והפקת קובץ ה-HEX מוגדרים מראש באופן מלא.
-2. **קומפילציה בלחיצה אחת:**
-   * קמפלו ובנו את הפרויקט (`F7` או *Project -> Build Target*). הקומפיילר יבנה את `Objects\aduc841_fir_filter.hex` ללא שגיאות וללא אזהרות.
-3. **צריבה באמצעות WSD:**
-   * חברו את כרטיס הפיתוח למחשב באמצעות ממשק טורי RS-232 / UART.
-   * הכניסו את הרכיב למצב הורדה (לחיצה ממושכת על כפתור `DOWNLOAD` בעת לחיצה ושחרור של `RESET`).
-   * הפעילו את תוכנת **WSD (Windows Serial Downloader)** של Analog Devices, בחרו את פורט ה-COM ואת קובץ ה-`.hex`, ולחצו **Download**.
-4. **בדיקה באוסילוסקופ:**
-   * חברו מחולל אותות אנלוגי לפין הכניסה של ערוץ ה-ADC (ערוץ 0).
-   * חברו את ערוצי האוסילוסקופ למוצאי `DAC0` (פין 12) ו-`DAC1` (פין 13) לצפייה חיה.
+### 1. סימולציה ותכנון המסנן ב-Python (רשות)
+מקדמי המסנן ועקומות תגובת התדר מחושבים אוטומטית באמצעות סקריפט Python:
+```bash
+pip install -r requirements.txt
+python scripts/fir_design.py
+```
+*הסקריפט מחולל את `src/filter_taps.c`, `src/filter_taps.h` ואת גרף התדר `docs/images/filter_bode_linear.png`.*
+
+### 2. קומפילציית הקושחה (Keil µVision)
+1. **פתיחת הפרויקט:** הפעילו את Keil µVision ופתחו ישירות את הקובץ `project.uvproj` משורש המאגר. הרכיב (`ADuC841`), עץ הקבצים (`.\src\*.c`), נתיבי ה-Includes, ומודל הזיכרון Small מוגדרים מראש באופן מלא.
+2. **בנייה וקומפילציה:** קמפלו ובנו את הפרויקט (`F7` או *Project -> Build Target*). הקומפיילר יבנה את `Objects\aduc841_fir_filter.hex` ללא שגיאות וללא אזהרות.
+
+### 3. צריבה למיקרו-בקר ADuC841
+1. חברו את כרטיס הפיתוח למחשב באמצעות ממשק טורי RS-232 / UART.
+2. הכניסו את המיקרו-בקר למצב צריבה (Download Mode): לחצו והחזיקו את כפתור `DOWNLOAD`, לחצו ושחררו את כפתור `RESET`, ולאחר מכן שחררו את `DOWNLOAD`.
+3. הפעילו את תוכנת [Windows Serial Downloader (WSD)](https://www.analog.com/en/resources/evaluation-hardware-and-software/evaluation-boards-kits/eval-aduc841.html) של Analog Devices, בחרו את פורט ה-COM הפעיל ואת הקובץ `Objects\aduc841_fir_filter.hex`, ולחצו **Download**.
+
+### 4. הפעלה ובדיקה חיה באוסילוסקופ
+1. חברו מחולל אותות אנלוגי ($2.0\text{ V}_{pp}$ עם היסט DC של $1.25\text{ V}$) לפין הכניסה של ערוץ ADC 0 (פין 7).
+2. חברו את ערוץ 1 של האוסילוסקופ (צהוב) למוצא `DAC0` (פין 12) כאות ייחוס גולמי.
+3. חברו את ערוץ 2 של האוסילוסקופ (ירוק) למוצא `DAC1` (פין 13) לצפייה באות המסונן בזמן אמת.

@@ -8,13 +8,17 @@
 
 **[English](README.md) • [עברית (Hebrew)](README.he.md)**
 
+**[Highlights](#-key-engineering-highlights) • [Architecture](#-system-architecture) • [Verification](#-experimental-verification) • [Repository Structure](#-repository-structure) • [Build & Flash](#-building--flashing)**
+
 A bare-metal embedded C implementation of a **Real-Time 11-Tap Finite Impulse Response (FIR) Low-Pass Filter** running on an **Analog Devices ADuC841** microcontroller (pipelined single-cycle 8051 core).
 
 The system continuously acquires analog input data via a hardware timer trigger ($F_s = 1000\text{ Hz}$), executes fixed-point convolution using an $O(1)$ circular buffer residing in fast internal RAM (`idata`), and drives dual on-chip 12-bit DACs to benchmark the raw input against the filtered output in real time on an oscilloscope.
 
 <div align="center">
-  <img src="docs/images/hardware_setup.jpg" alt="ADuC841 MicroConverter SAR Evaluation Board" width="620" />
-  <p><em>Hardware Setup: Analog Devices ADuC841 MicroConverter SAR Evaluation Board (Rev A4) running the real-time FIR DSP firmware</em></p>
+  <a href="docs/images/hardware_setup.jpg">
+    <img src="docs/images/hardware_setup.jpg" alt="ADuC841 MicroConverter SAR Evaluation Board" width="620" />
+  </a>
+  <p><em>Hardware Setup: Analog Devices ADuC841 MicroConverter SAR Evaluation Board (Rev A4) running the real-time FIR DSP firmware (Click to expand)</em></p>
 </div>
 
 ---
@@ -49,7 +53,7 @@ flowchart LR
     F --> G
 ```
 
-### Mathematical Model
+### 📐 Mathematical Model & Fixed-Point DSP
 
 The filter implements an 11-tap symmetric linear-phase FIR difference equation:
 
@@ -70,7 +74,7 @@ The physical hardware response closely matches the theoretical model across all 
 
 | Hardware Measurements vs Theory (DSO Verification) | Quantization Analysis (Float vs Fixed-Point) |
 | :---: | :---: |
-| ![Measured vs Theory](docs/images/00_bode_linear_measured_vs_theory.png) | ![Quantization Analysis](docs/images/filter_bode_linear.png) |
+| [![Measured vs Theory](docs/images/00_bode_linear_measured_vs_theory.png)](docs/images/00_bode_linear_measured_vs_theory.png) | [![Quantization Analysis](docs/images/filter_bode_linear.png)](docs/images/filter_bode_linear.png) |
 | **Physical oscilloscope measurements (red markers)** closely track the theoretical model across all frequencies. | **Fixed-point quantization (`SCALING_FACTOR = 744`)** maintains exact half-power cutoff ($0.707$) and linear phase. |
 
 ---
@@ -81,8 +85,10 @@ The following captures demonstrate the three operational regimes of the filter:
 
 | Passband (10 Hz) | Cutoff Region (70 Hz) | Deep Stopband (200 Hz) |
 | :---: | :---: | :---: |
-| ![Passband 10Hz](docs/images/02_passband_10hz.png) | ![Cutoff 70Hz](docs/images/05_cutoff_fc_70hz.png) | ![Stopband 200Hz](docs/images/08_deep_stopband_200hz.png) |
+| [![Passband 10Hz](docs/images/02_passband_10hz.png)](docs/images/02_passband_10hz.png) | [![Cutoff 70Hz](docs/images/05_cutoff_fc_70hz.png)](docs/images/05_cutoff_fc_70hz.png) | [![Stopband 200Hz](docs/images/08_deep_stopband_200hz.png)](docs/images/08_deep_stopband_200hz.png) |
 | **Gain: -0.3 dB** ($0.97\times$)<br>Full amplitude transmission<br>Linear group delay $\tau \approx 5.0\text{ ms}$ | **Gain: -2.8 dB** ($0.73\times$)<br>Near half-power point ($f_c \approx 64\text{ Hz}$)<br>$-90^\circ$ phase transition | **Gain: -14.1 dB** ($0.20\times$)<br>Deep high-frequency suppression<br>Residual noise floor rejection |
+
+> 💡 **Tip:** Click on any oscilloscope screen capture or Bode plot to inspect full-resolution waveforms and cursor telemetry.
 
 > **Channel Legend:**  
 > 🟡 **CH1 (Yellow):** Raw input pass-through via `DAC0`  
@@ -147,15 +153,24 @@ The following captures demonstrate the three operational regimes of the filter:
 
 ## 🚀 Building & Flashing
 
-1. **Open Keil µVision Project:**
-   - Launch Keil µVision and open `project.uvproj` directly from the repository root.
-   - The target device (`ADuC841`), source groups (`.\src\*.c`), include paths, and hex output are preconfigured.
-2. **Build:**
-   - Compile and link (`F7` or *Build Target*). Keil produces `Objects\aduc841_fir_filter.hex` with 0 errors and 0 warnings.
-3. **Flashing via WSD:**
-   - Connect the ADuC841 evaluation board to PC via RS-232 / UART.
-   - Put device into download mode (hold `DOWNLOAD` button while pressing `RESET`).
-   - Launch Analog Devices **WSD (Windows Serial Downloader)**, select COM port, choose `.hex` file, and click **Download**.
-4. **Operation & Verification:**
-   - Connect the analog signal generator to the ADC input pin.
-   - Probe `DAC0` (pin 12 / DAC0 output) and `DAC1` (pin 13 / DAC1 output) on an oscilloscope.
+### 1. Python Simulation & Tap Generation (Optional)
+The FIR coefficients and frequency response plots are generated automatically:
+```bash
+pip install -r requirements.txt
+python scripts/fir_design.py
+```
+*Outputs: `src/filter_taps.c`, `src/filter_taps.h`, and `docs/images/filter_bode_linear.png`.*
+
+### 2. Firmware Compilation (Keil µVision)
+1. **Open Project:** Launch Keil µVision and open `project.uvproj` directly from the repository root. Target MCU (`ADuC841`), source tree (`.\src\*.c`), include paths, and Small memory model are preconfigured.
+2. **Build Target:** Press `F7` (or *Project -> Build Target*). Keil compiles and links the project into `Objects\aduc841_fir_filter.hex` with 0 errors and 0 warnings.
+
+### 3. Flashing to ADuC841
+1. Connect the ADuC841 evaluation board to your PC via RS-232 / UART.
+2. Enter download mode: hold the `DOWNLOAD` button while pressing and releasing `RESET`.
+3. Launch Analog Devices [Windows Serial Downloader (WSD)](https://www.analog.com/en/resources/evaluation-hardware-and-software/evaluation-boards-kits/eval-aduc841.html), select the active COM port, choose `Objects\aduc841_fir_filter.hex`, and click **Download**.
+
+### 4. Live Operation & Scope Verification
+1. Connect an analog function generator ($2.0\text{ V}_{pp}$, $1.25\text{ V}$ DC offset) to ADC Channel 0 (Pin 7).
+2. Connect Oscilloscope Channel 1 (Yellow) to `DAC0` (Pin 12) for the raw pass-through reference.
+3. Connect Oscilloscope Channel 2 (Green) to `DAC1` (Pin 13) to observe real-time filtered output.
