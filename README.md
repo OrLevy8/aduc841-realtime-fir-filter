@@ -108,6 +108,7 @@ The following captures demonstrate the three operational regimes of the filter:
 ## 📁 Repository Structure
 
 ```text
+├── project.uvproj        # Keil µVision project file (ready to build)
 ├── src/
 │   ├── lab7_main.c          # Application entry point, main loop & DSP pipeline
 │   ├── circular_buffer.c    # O(1) circular buffer implementation in idata RAM
@@ -121,6 +122,7 @@ The following captures demonstrate the three operational regimes of the filter:
 │   ├── images/              # Oscilloscope captures and Bode plot response curves
 │   ├── FIR_FILTER_VERIFICATION_REPORT.md # In-depth technical verification report
 │   └── sweep_measurements.json          # Experimental sweep dataset
+├── LICENSE                  # MIT License
 ├── README.md                # English Documentation
 └── README.he.md             # Hebrew Documentation (עברית)
 ```
@@ -143,12 +145,11 @@ The following captures demonstrate the three operational regimes of the filter:
 
 ## 🚀 Building & Flashing
 
-1. **Keil µVision Setup:**
-   - Create a new project targeting `Analog Devices ADuC841`.
-   - Add all source files from `src/` to the project tree.
-   - In **Options for Target -> Target**, set the memory model to **Small: variables in DATA**.
+1. **Open Keil µVision Project:**
+   - Launch Keil µVision and open `project.uvproj` directly from the repository root.
+   - The target device (`ADuC841`), source groups (`.\src\*.c`), include paths, and hex output are preconfigured.
 2. **Build:**
-   - Compile and link (`F7`) to generate the output `.hex` file.
+   - Compile and link (`F7` or *Build Target*). Keil produces `Objects\aduc841_fir_filter.hex` with 0 errors and 0 warnings.
 3. **Flashing via WSD:**
    - Connect the ADuC841 evaluation board to PC via RS-232 / UART.
    - Put device into download mode (hold `DOWNLOAD` button while pressing `RESET`).

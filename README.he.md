@@ -108,6 +108,7 @@ $$y[n] = \frac{1}{\text{SCALING\_FACTOR}} \sum_{m=0}^{10} h[m] \cdot x[n-m]$$
 ## 📁 מבנה התיקיות במאגר
 
 ```text
+├── project.uvproj        # קובץ פרויקט מוכן לפתיחה וקומפילציה ב-Keil µVision
 ├── src/
 │   ├── lab7_main.c          # הלולאה הראשית, סנכרון הדגימה וחישוב הקונבולוציה
 │   ├── circular_buffer.c    # מימוש חוצץ מעגלי ב-O(1) בזיכרון idata RAM
@@ -121,6 +122,7 @@ $$y[n] = \frac{1}{\text{SCALING\_FACTOR}} \sum_{m=0}^{10} h[m] \cdot x[n-m]$$
 │   ├── images/              # צילומי מסך מאוסילוסקופ ועקומות תגובת תדר
 │   ├── FIR_FILTER_VERIFICATION_REPORT.md # דוח ניסוי הנדסי מורחב ומפורט
 │   └── sweep_measurements.json          # נתוני מדידה גולמיים של סריקת התדר
+├── LICENSE                  # רישיון קוד פתוח MIT
 ├── README.md                # תיעוד ראשי באנגלית (English Documentation)
 └── README.he.md             # תיעוד ראשי בעברית
 ```
@@ -143,12 +145,11 @@ $$y[n] = \frac{1}{\text{SCALING\_FACTOR}} \sum_{m=0}^{10} h[m] \cdot x[n-m]$$
 
 ## 🚀 הוראות בנייה וצריבה (Build & Flash)
 
-1. **הגדרת פרויקט ב-Keil µVision:**
-   * פתחו פרויקט חדש ובחרו את הרכיב `Analog Devices ADuC841`.
-   * הוסיפו את כל קובצי ה-C מתוך תיקיית `src/` לעץ הפרויקט.
-   * ב-**Options for Target -> Target**, ודאו שמודל הזיכרון מוגדר ל-**Small: variables in DATA**.
-2. **קומפילציה:**
-   * קמפלו ובנו את הפרויקט (`F7`) ליצירת קובץ ה-`.hex`.
+1. **פתיחת הפרויקט ב-Keil µVision:**
+   * הפעילו את Keil µVision ופתחו ישירות את הקובץ `project.uvproj` משורש המאגר.
+   * הרכיב (`ADuC841`), עץ הקבצים (`.\src\*.c`), נתיבי ה-Includes, מודל הזיכרון Small והפקת קובץ ה-HEX מוגדרים מראש באופן מלא.
+2. **קומפילציה בלחיצה אחת:**
+   * קמפלו ובנו את הפרויקט (`F7` או *Project -> Build Target*). הקומפיילר יבנה את `Objects\aduc841_fir_filter.hex` ללא שגיאות וללא אזהרות.
 3. **צריבה באמצעות WSD:**
    * חברו את כרטיס הפיתוח למחשב באמצעות ממשק טורי RS-232 / UART.
    * הכניסו את הרכיב למצב הורדה (לחיצה ממושכת על כפתור `DOWNLOAD` בעת לחיצה ושחרור של `RESET`).
