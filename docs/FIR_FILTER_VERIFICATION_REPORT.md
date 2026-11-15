@@ -1,7 +1,7 @@
 # דוח ניתוח תוצאות ניסוי: אימות מסנן FIR בזמן אמת (ADuC841)
 ## Experimental Verification & Frequency Response Analysis of 11-Tap Real-Time FIR Filter
 
-**מבצעי הניסוי:** אור לוי (322273640), דניאל רבינוביץ (34504688)  
+**מבצעי הניסוי:** אור לוי, דניאל רבינוביץ  
 **סביבת בדיקה:** מחולל אותות ואוסילוסקופ ספרתי חי ESP32 Dual-ADC (10 kSPS @ 921.6 kbaud)  
 **פלטפורמת עיבוד אותות:** Analog Devices ADuC841 Microcontroller (Pipelined Single-Cycle 8051)  
 **תאריך מדידה:** 15 נובמבר 2026  
@@ -47,9 +47,15 @@ const signed char code filter_taps[11] = {
 
 ## 3. עקומת תגובת תדר לינארית (Linear Magnitude & Phase)
 
-![Bode Plot](images/filter_bode_linear.png)
+### אימות אמפירי: נתוני מדידה בפועל מהאוסילוסקופ מול מודל תיאורטי
+![Linear Bode Measured vs Theory](images/00_bode_linear_measured_vs_theory.png)
 
-הגרף לעיל מציג התאמה יוצאת דופן בין נתוני המדידה שנמדדו פיזית במעבדה (הנקודות האדומות) לבין המודל המתמטי התיאורטי של המסנן (הקו הכחול הרציף).
+הגרף לעיל מציג התאמה יוצאת דופן בין נתוני המדידה שנמדדו פיזית במעבדה באמצעות ה-PicoScope (הנקודות האדומות) לבין המודל המתמטי התיאורטי של המסנן (הקו הכחול הרציף).
+
+### סימולציית תכנון: מודל אידיאלי (Float) מול קוונטיזציית נקודה קבועה (Fixed-Point)
+![Linear Frequency Response Simulation](images/filter_bode_linear.png)
+
+הגרף לעיל, המופק ישירות מסקריפט ה-Python (`fir_design.py`), משווה בין מקדמי סינון בנקודה צפה (Float) לבין ייצוג קוונטי של 8-ביט (`signed char` בנרמול פקטור 744). ניתן לראות כי שגיאת הקוונטיזציה זניחה לחלוטין, נקודת מחצית ההספק ($0.707$) נשמרת סביב $63.6\text{ Hz}$, והמופע נשאר ליניארי לחלוטין עם שיהוי קבוע של $5.0\text{ ms}$.
 
 ---
 
@@ -155,4 +161,4 @@ const signed char code filter_taps[11] = {
 3. **שילוב מערכות מושלם (System Integration):** השימוש במחולל האותות ובאוסילוסקופ ה-ESP32 שבנינו אפשר לאפיין את מעבד ה-DSP של ה-ADuC841 בדיוק ובנוחות של צב"ד שולחני מקצועי בשווי אלפי דולרים.
 
 ---
-*דוח זה והתמונות הנלוות מאוחסנים בתיקיית הפרויקט [github_showcase](file:///C:/Users/levyo/Documents/Electronics/ADuC/ex7/github_showcase).*
+*דוח זה והתמונות הנלוות מאוחסנים במאגר הפרויקט: [aduc841-realtime-fir-filter](https://github.com/OrLevy8/aduc841-realtime-fir-filter).*

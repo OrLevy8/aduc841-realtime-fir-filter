@@ -58,11 +58,14 @@ $$y[n] = \frac{1}{\text{SCALING\_FACTOR}} \sum_{m=0}^{10} h[m] \cdot x[n-m]$$
 
 ## 🔬 Experimental Verification
 
-### Frequency Response (Linear Magnitude & Phase)
+### Frequency Response & Hardware Verification
 
-Comparison between the ideal floating-point filter and the 8-bit quantized fixed-point implementation (`SCALING_FACTOR = 744`), showing negligible quantization error, half-power cutoff threshold ($0.707$), and linear phase:
+The physical hardware response closely matches the theoretical model across all operational regimes ($0-200\text{ Hz}$):
 
-![Linear Frequency Response](docs/images/filter_bode_linear.png)
+| Hardware Measurements vs Theory (DSO Verification) | Quantization Analysis (Float vs Fixed-Point) |
+| :---: | :---: |
+| ![Measured vs Theory](docs/images/00_bode_linear_measured_vs_theory.png) | ![Quantization Analysis](docs/images/filter_bode_linear.png) |
+| **Physical oscilloscope measurements (red markers)** closely track the theoretical model across all frequencies. | **Fixed-point quantization (`SCALING_FACTOR = 744`)** maintains exact half-power cutoff ($0.707$) and linear phase. |
 
 ---
 

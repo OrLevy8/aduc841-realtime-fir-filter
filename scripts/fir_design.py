@@ -1,5 +1,5 @@
 """
- Name: Or Levy 322273640, Daniel Rabinovitsch 34504688
+ Name: Or Levy, Daniel Rabinovitsch
  Date: 14/10/26
  File: fir_design.py
  DESCRIPTION: Design a low-pass FIR filter, plot its Bode plot before and after quantization
@@ -110,7 +110,7 @@ scale_str = f"{int(scale_factor)}" # format scale factor
 # 1. Write to C source file
 with open(c_file_path, "w", encoding="utf-8") as f:
     f.write("/*\n")
-    f.write(" Name: Or Levy 322273640, Daniel Rabinovitsch 34504688\n")
+    f.write(" Name: Or Levy, Daniel Rabinovitsch\n")
     f.write(" Date: 14/10/26\n")
     f.write(" File: filter_taps.c\n")
     f.write(" */\n\n")
@@ -122,7 +122,7 @@ with open(c_file_path, "w", encoding="utf-8") as f:
 # 2. Write to header file
 with open(h_file_path, "w", encoding="utf-8") as f:
     f.write("/*\n")
-    f.write(" Name: Or Levy 322273640, Daniel Rabinovitsch 34504688\n")
+    f.write(" Name: Or Levy, Daniel Rabinovitsch\n")
     f.write(" Date: 14/10/26\n")
     f.write(" File: filter_taps.h\n")
     f.write(" */\n\n")

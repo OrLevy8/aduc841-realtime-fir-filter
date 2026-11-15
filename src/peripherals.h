@@ -1,5 +1,5 @@
 /*
- Name: Or Levy 322273640, Daniel Rabinovitsch 34504688
+ Name: Or Levy, Daniel Rabinovitsch
  Date: 14/10/26
  File: peripherals.h 
  */

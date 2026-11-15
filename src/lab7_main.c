@@ -1,5 +1,5 @@
 /*
- Name: Or Levy 322273640, Daniel Rabinovitsch 34504688
+ Name: Or Levy, Daniel Rabinovitsch
  Date: 14/10/26
  DESCRIPTION: FIR LPF filter implementation
  File: lab7_main.c
