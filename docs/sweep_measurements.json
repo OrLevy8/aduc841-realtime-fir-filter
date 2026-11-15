@@ -1,0 +1,98 @@
+[
+  {
+    "freq_hz": 0.0,
+    "title": "DC Bias (0 Hz)",
+    "vpp_in": 0.0,
+    "vpp_out": 0.0,
+    "mean_in": 1.302,
+    "mean_out": 1.31,
+    "gain": 1.0,
+    "gain_db": 0.0,
+    "file": "01_dc_0hz.png",
+    "desc": "Direct Current baseline at 1.25V offset (DC verification)"
+  },
+  {
+    "freq_hz": 10.0,
+    "title": "Passband (10 Hz)",
+    "vpp_in": 2.149,
+    "vpp_out": 2.075,
+    "mean_in": 1.37,
+    "mean_out": 1.368,
+    "gain": 0.966,
+    "gain_db": -0.3,
+    "file": "02_passband_10hz.png",
+    "desc": "Low-frequency passband with unity gain and ~5ms linear group delay"
+  },
+  {
+    "freq_hz": 25.0,
+    "title": "Passband (25 Hz)",
+    "vpp_in": 2.15,
+    "vpp_out": 1.933,
+    "mean_in": 1.288,
+    "mean_out": 1.299,
+    "gain": 0.899,
+    "gain_db": -0.92,
+    "file": "03_passband_25hz.png",
+    "desc": "Flat passband transmission (minimal attenuation)"
+  },
+  {
+    "freq_hz": 50.0,
+    "title": "Cutoff Knee (50 Hz)",
+    "vpp_in": 1.993,
+    "vpp_out": 1.8,
+    "mean_in": 1.29,
+    "mean_out": 1.312,
+    "gain": 0.903,
+    "gain_db": -0.88,
+    "file": "04_cutoff_knee_50hz.png",
+    "desc": "Approaching -3dB half-power cutoff knee; initial roll-off"
+  },
+  {
+    "freq_hz": 70.0,
+    "title": "Cutoff Frequency (70 Hz)",
+    "vpp_in": 2.1,
+    "vpp_out": 1.528,
+    "mean_in": 1.284,
+    "mean_out": 1.307,
+    "gain": 0.728,
+    "gain_db": -2.76,
+    "file": "05_cutoff_fc_70hz.png",
+    "desc": "Cutoff region (~64 Hz nominal); output down by ~3dB"
+  },
+  {
+    "freq_hz": 100.0,
+    "title": "Attenuation Band (100 Hz)",
+    "vpp_in": 1.945,
+    "vpp_out": 0.986,
+    "mean_in": 1.288,
+    "mean_out": 1.304,
+    "gain": 0.507,
+    "gain_db": -5.9,
+    "file": "06_attenuation_100hz.png",
+    "desc": "Transition to stopband; output attenuated by ~50%"
+  },
+  {
+    "freq_hz": 150.0,
+    "title": "Stopband (150 Hz)",
+    "vpp_in": 2.127,
+    "vpp_out": 0.348,
+    "mean_in": 1.287,
+    "mean_out": 1.299,
+    "gain": 0.164,
+    "gain_db": -15.72,
+    "file": "07_stopband_150hz.png",
+    "desc": "Strong high-frequency attenuation (>10dB suppression)"
+  },
+  {
+    "freq_hz": 200.0,
+    "title": "Deep Stopband (200 Hz)",
+    "vpp_in": 1.901,
+    "vpp_out": 0.376,
+    "mean_in": 1.292,
+    "mean_out": 1.306,
+    "gain": 0.198,
+    "gain_db": -14.08,
+    "file": "08_deep_stopband_200hz.png",
+    "desc": "Deep stopband rejection (>75% amplitude attenuation)"
+  }
+]

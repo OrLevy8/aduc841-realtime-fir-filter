@@ -1,0 +1,25 @@
+# Keil / C51 Build Artifacts
+*.obj
+*.lst
+*.m51
+*.tmp
+*.bak
+*.uvgui.*
+*.uvopt
+*.uvproj.saved_*
+Build/
+Objects/
+Listings/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+
+# OS / Editor
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
