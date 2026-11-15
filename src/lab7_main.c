@@ -66,7 +66,7 @@ void main(void)
             filtered = sum / SCALING_FACTOR;
             DAC0DATA = newsample;    
 
-            // איפוס פלט שלילי לפני שליחה ל-DAC לפי דרישות פרק 22.3
+            // Clamp negative filtered output to zero (prevent DAC underflow, Section 22.3)
             if (filtered < 0) 
             {
                 filtered = 0;

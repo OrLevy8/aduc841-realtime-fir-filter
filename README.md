@@ -1,15 +1,21 @@
 # Real-Time Digital FIR Filter on ADuC841 (8051 Architecture)
 
 [![Platform: ADuC841 / 8051](https://img.shields.io/badge/Platform-ADuC841%20(8051)-orange.svg)](https://www.analog.com/en/products/aduc841.html)
-[![Architecture: Bare-Metal](https://img.shields.io/badge/Architecture-Bare--Metal%20C-brightgreen.svg)]()
-[![DSP: Fixed-Point FIR](https://img.shields.io/badge/DSP-Fixed--Point%2011--Tap-blue.svg)]()
-[![Verification: ESP32 DSO 10kSPS](https://img.shields.io/badge/Verification-ESP32%20DSO%2010kSPS-success.svg)]()
+[![Architecture: Bare-Metal](https://img.shields.io/badge/Architecture-Bare--Metal%20C-brightgreen.svg)](#-system-architecture)
+[![DSP: Fixed-Point FIR](https://img.shields.io/badge/DSP-Fixed--Point%2011--Tap-blue.svg)](#-mathematical-model--fixed-point-dsp)
+[![Verification: ESP32 DSO 10kSPS](https://img.shields.io/badge/Verification-ESP32%20DSO%2010kSPS-success.svg)](#-experimental-verification)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **[English](README.md) • [עברית (Hebrew)](README.he.md)**
 
 A bare-metal embedded C implementation of a **Real-Time 11-Tap Finite Impulse Response (FIR) Low-Pass Filter** running on an **Analog Devices ADuC841** microcontroller (pipelined single-cycle 8051 core).
 
 The system continuously acquires analog input data via a hardware timer trigger ($F_s = 1000\text{ Hz}$), executes fixed-point convolution using an $O(1)$ circular buffer residing in fast internal RAM (`idata`), and drives dual on-chip 12-bit DACs to benchmark the raw input against the filtered output in real time on an oscilloscope.
+
+<div align="center">
+  <img src="docs/images/hardware_setup.jpg" alt="ADuC841 MicroConverter SAR Evaluation Board" width="620" />
+  <p><em>Hardware Setup: Analog Devices ADuC841 MicroConverter SAR Evaluation Board (Rev A4) running the real-time FIR DSP firmware</em></p>
+</div>
 
 ---
 

@@ -1,15 +1,21 @@
 # מסנן ספרתי בזמן אמת (FIR Filter) על מיקרו-בקר ADuC841 (ארכיטקטורת 8051)
 
 [![Platform: ADuC841 / 8051](https://img.shields.io/badge/Platform-ADuC841%20(8051)-orange.svg)](https://www.analog.com/en/products/aduc841.html)
-[![Architecture: Bare-Metal](https://img.shields.io/badge/Architecture-Bare--Metal%20C-brightgreen.svg)]()
-[![DSP: Fixed-Point FIR](https://img.shields.io/badge/DSP-Fixed--Point%2011--Tap-blue.svg)]()
-[![Verification: ESP32 DSO 10kSPS](https://img.shields.io/badge/Verification-ESP32%20DSO%2010kSPS-success.svg)]()
+[![Architecture: Bare-Metal](https://img.shields.io/badge/Architecture-Bare--Metal%20C-brightgreen.svg)](#-ארכיטקטורת-המערכת)
+[![DSP: Fixed-Point FIR](https://img.shields.io/badge/DSP-Fixed--Point%2011--Tap-blue.svg)](#-מודל-מתמטי-וחשבון-נקודה-קבועה-fixed-point-dsp)
+[![Verification: ESP32 DSO 10kSPS](https://img.shields.io/badge/Verification-ESP32%20DSO%2010kSPS-success.svg)](#-אימות-ניסיוני-וממצאי-מעבדה)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **[English](README.md) • [עברית](README.he.md)**
 
 מימוש Bare-Metal בשפת C של **מסנן מעביר נמוכים ספרתי מסוג FIR (Finite Impulse Response) בזמן אמת**, בעל 11 מקדמים, הרץ ישירות על גבי מיקרו-בקר **Analog Devices ADuC841** (ליבת 8051 בעלת מחזור שעון יחיד לפקודה).
 
 המערכת דוגמת אות אנלוגי בכניסה באמצעות טריגר חומרה מטיימר ($F_s = 1000\text{ Hz}$), מבצעת קונבולוציה בחשבון נקודה קבועה (Fixed-Point) באמצעות חוצץ מעגלי ב-$O(1)$ בזיכרון הנתונים הפנימי המהיר (`idata`), ומשחזרת בו-זמנית שני אותות אנלוגיים דרך צמד ממירי DAC של 12 ביט להשוואה חיה באוסילוסקופ בין האות המקורי לאות המסונן.
+
+<div align="center">
+  <img src="docs/images/hardware_setup.jpg" alt="ערכת פיתוח ADuC841" width="620" />
+  <p><em>מערך החומרה: כרטיס הפיתוח Analog Devices ADuC841 MicroConverter SAR Evaluation Board (Rev A4) המריץ את קושחת ה-FIR בזמן אמת</em></p>
+</div>
 
 ---
 

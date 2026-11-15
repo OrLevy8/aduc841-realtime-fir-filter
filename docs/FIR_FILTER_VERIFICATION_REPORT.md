@@ -20,6 +20,11 @@
    * **ערוץ 2 (ירוק / DAC1 / GPIO 35):** האות המסונן בזמן אמת (Filtered Output).
 4. **האוסילוסקופ הספרתי של ה-ESP32** דגם את שני הערוצים בקצב של **10 kSPS** לערוץ (דגימת יתר ביחס לקצב המסנן) ושידר את הנתונים בזמן אמת למחשב בממשק UART מהיר של **921,600 baud**.
 
+<div align="center">
+  <img src="images/hardware_setup.jpg" alt="מערך החומרה במעבדה" width="550" />
+  <p><em>איור 1: מערך הניסוי – כרטיס ADuC841 MicroConverter SAR Evaluation Board Rev A4 מחובר עם חיווט אנלוגי (ADC0, DAC0, DAC1, AGND)</em></p>
+</div>
+
 ---
 
 ## 2. המודל התיאורטי של המסנן (FIR Filter Theory)
