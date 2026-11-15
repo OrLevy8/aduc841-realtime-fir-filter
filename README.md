@@ -42,7 +42,7 @@ The system continuously acquires analog input data via a hardware timer trigger 
 flowchart LR
     A["Analog Input<br>2.00 Vpp, Offset 1.25V"] -->|Timer 2 Trigger| B["12-bit SAR ADC<br>Fs = 1.0 kHz"]
     B -->|ADC ISR| C["Circular Buffer<br>(idata RAM)"]
-    C -->|Convolution Σ(h·x)| D["Fixed-Point FIR Engine<br>11 Taps, Scale 744"]
+    C -->|Fixed-Point Convolution| D["Fixed-Point FIR Engine<br>11 Taps, Scale 744"]
     B -->|Pass-Through| E["DAC0: Raw Input<br>(Channel 1 - Yellow)"]
     D -->|Clamping Logic| F["DAC1: Filtered Signal<br>(Channel 2 - Green)"]
     E --> G["Dual-Channel Scope / DSO"]
@@ -53,7 +53,7 @@ flowchart LR
 
 The filter implements an 11-tap symmetric linear-phase FIR difference equation:
 
-$$y[n] = \frac{1}{\text{SCALING\_FACTOR}} \sum_{m=0}^{10} h[m] \cdot x[n-m]$$
+$$y[n] = \frac{1}{744} \sum_{m=0}^{10} h[m] \cdot x[n-m]$$
 
 - **Coefficients ($h[m]$):** `{0, 30, 64, 96, 119, 127, 119, 96, 64, 30, 0}`
 - **Normalization:** $\sum h[m] = 745 \approx 744$ (`SCALING_FACTOR = 744`), ensuring unity DC gain ($0\text{ dB}$).
