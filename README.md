@@ -58,11 +58,11 @@ $$y[n] = \frac{1}{\text{SCALING\_FACTOR}} \sum_{m=0}^{10} h[m] \cdot x[n-m]$$
 
 ## 🔬 Experimental Verification
 
-### Measured vs. Theoretical Frequency Response (Bode Plot)
+### Frequency Response (Linear Magnitude & Phase)
 
-Physical hardware measurements align closely with the theoretical FIR transfer function:
+Comparison between the ideal floating-point filter and the 8-bit quantized fixed-point implementation (`SCALING_FACTOR = 744`), showing negligible quantization error, half-power cutoff threshold ($0.707$), and linear phase:
 
-![Bode Plot](docs/images/00_bode_plot_measured_vs_theory.png)
+![Linear Frequency Response](docs/images/filter_bode_linear.png)
 
 ---
 

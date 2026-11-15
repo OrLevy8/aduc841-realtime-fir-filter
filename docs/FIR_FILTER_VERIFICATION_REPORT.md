@@ -45,9 +45,9 @@ const signed char code filter_taps[11] = {
 
 ---
 
-## 3. עקומת בודה: תוצאות הניסוי מול המודל התיאורטי (Bode Plot)
+## 3. עקומת תגובת תדר לינארית (Linear Magnitude & Phase)
 
-![Bode Plot](images/00_bode_plot_measured_vs_theory.png)
+![Bode Plot](images/filter_bode_linear.png)
 
 הגרף לעיל מציג התאמה יוצאת דופן בין נתוני המדידה שנמדדו פיזית במעבדה (הנקודות האדומות) לבין המודל המתמטי התיאורטי של המסנן (הקו הכחול הרציף).
 
